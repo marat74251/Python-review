@@ -24,7 +24,7 @@ def get_connection():
 def create_table():
     conn = get_connection()
     with conn.cursor(cursor_factory=RealDictCursor) as cursor:
-        cursor.execute("CREATE TABLE IF NOT EXISTS my_table (id SERIAL PRIMARY KEY, data TEXT NOT NULL);")
+        cursor.execute("CREATE TABLE IF NOT EXISTS my_table (name TEXT NOT NULL, data TEXT NOT NULL);")
         conn.commit()
     conn.close()
 
@@ -44,10 +44,12 @@ def val_get():
     conn.close()
     return result
 
-def save_data(data):
+def save_data_for_head(data):
     conn = get_connection()
+    flattened_data = [(item[0], item[1]) for item in data]
     with conn.cursor() as cursor:
-        cursor.execute("INSERT INTO my_table (data) VALUES (%s);", (data,))
+        insert_query = "INSERT INTO my_table (name, data) VALUES (%s, %s);"
+        cursor.executemany(insert_query, flattened_data)
         conn.commit()
     conn.close()
 
