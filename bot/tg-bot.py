@@ -3,8 +3,11 @@ from db import *
 from parser import *
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from dotenv import load_dotenv
 
-APP_TOKEN = "7548029391:AAH70pGo66ka8oxOobaqSpHSgWUCobMgX4A"
+load_dotenv()
+
+APP_TOKEN = os.getenv("APP_TOKEN")
 
 url = 'https://s-b-1.ru/catalog/'
 cuted_url = 'https://s-b-1.ru'
